@@ -5,8 +5,9 @@ export default function AIPage() {
   const [q, setQ] = useState('');
   const [ans, setAns] = useState<any>(null);
 
+  const base = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000';
   async function ask() {
-    const resp = await fetch('http://localhost:4000/ai/chat', {
+    const resp = await fetch(`${base}/ai/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer REPLACE_TOKEN' },
       body: JSON.stringify({ messages: [{ role: 'user', content: q }] })

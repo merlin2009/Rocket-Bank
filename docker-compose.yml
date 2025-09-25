@@ -11,6 +11,43 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./apps/api
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgresql://bank:bankpass@postgres:5432/bankdb?schema=public
+      JWT_SECRET: replace_me
+      AI_PROVIDER: openrouter
+      AI_MODEL: openrouter/anthropic/claude-3.5-sonnet
+      OPENROUTER_API_KEY: ""
+      OPENAI_API_KEY: ""
+      AAVE_RPC_URL: "https://polygon-rpc.com"
+      AAVE_NETWORK: polygon
+      AAVE_POOL_ADDRESS_PROVIDER: "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
+      OBP_BASE_URL: https://apisandbox.openbankproject.com
+      OBP_CONSUMER_KEY: ""
+      OBP_CONSUMER_SECRET: ""
+      OBP_USERNAME: ""
+      OBP_PASSWORD: ""
+      STRIPE_API_KEY: ""
+      STRIPE_WEBHOOK_SECRET: ""
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+
+  web:
+    build:
+      context: ./apps/web
+    environment:
+      NEXT_PUBLIC_API_BASE: http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
 volumes:
   pgdata:
 

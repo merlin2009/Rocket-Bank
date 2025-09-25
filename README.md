@@ -34,6 +34,13 @@ npm run dev:api    # http://localhost:4000
 npm run dev:web    # http://localhost:3000
 ```
 
+### With docker-compose
+```bash
+docker compose up -d --build
+# API: http://localhost:4000
+# Web: http://localhost:3000
+```
+
 If Docker is not available, ensure your Postgres runs at `DATABASE_URL` (default: `postgresql://bank:bankpass@localhost:5432/bankdb?schema=public`).
 
 ## Configuration
