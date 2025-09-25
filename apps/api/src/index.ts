@@ -8,10 +8,12 @@ import payments from './routes/payments';
 import ai from './routes/ai';
 import defi from './routes/defi';
 import obp from './routes/openbanking';
-import stripe from './routes/stripe';
+import stripe, { stripeWebhook } from './routes/stripe';
 
 const app = express();
 app.use(cors());
+// Stripe webhook requires raw body
+app.use('/stripe', stripeWebhook);
 app.use(express.json());
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
