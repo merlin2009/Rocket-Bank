@@ -11,6 +11,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <a href="/payments" style={{ marginRight: 12 }}>Payments</a>
           <a href="/defi" style={{ marginRight: 12 }}>DeFi</a>
           <a href="/ai" style={{ marginRight: 12 }}>AI</a>
+          <a href="/kyc" style={{ marginRight: 12 }}>KYC</a>
+          <a href="/p2p" style={{ marginRight: 12 }}>P2P</a>
         </nav>
         <main style={{ padding: 16 }}>{children}</main>
       </body>
