@@ -9,6 +9,7 @@ import ai from './routes/ai';
 import defi from './routes/defi';
 import obp from './routes/openbanking';
 import stripe, { stripeWebhook } from './routes/stripe';
+import p2p from './routes/p2p';
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,7 @@ app.use('/ai', ai);
 app.use('/defi', defi);
 app.use('/openbanking', obp);
 app.use('/stripe', stripe);
+app.use('/p2p', p2p);
 
 app.listen(env.port, () => {
   console.log(`API listening on :${env.port}`);

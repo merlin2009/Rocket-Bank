@@ -64,7 +64,7 @@ model PaymentIntent {
   amountMinor   Int
   currency      String
   provider      String
-  providerRef   String?
+  providerRef   String? @unique
   status        String    @default("requires_payment_method")
   createdAt     DateTime  @default(now())
 }
@@ -75,5 +75,7 @@ model ProviderLink {
   provider  String
   metadata  Json?
   createdAt DateTime @default(now())
+
+  @@unique([userId, provider])
 }
 
