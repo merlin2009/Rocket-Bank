@@ -16,7 +16,14 @@ jobs:
         run: npx prisma generate --schema apps/api/prisma/schema.prisma
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      - name: Run Migrations
-        run: npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
+      - name: Run Migrations (deploy) or fallback to db push
+        run: |
+          set -e
+          if [ -d "apps/api/prisma/migrations" ] && [ "$(ls -A apps/api/prisma/migrations | wc -l)" -gt 0 ]; then
+            npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
+          else
+            echo "No migrations found. Falling back to prisma db push."
+            npx prisma db push --schema apps/api/prisma/schema.prisma
+          fi
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
