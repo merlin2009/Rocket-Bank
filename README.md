@@ -60,3 +60,18 @@ Edit `.env`:
 
 ## License
 Proprietary — Rocket Bank. All rights reserved.
+
+## Deploy
+- Render: use `render.yaml` as Blueprint. Set secrets in service env (JWT_SECRET, DATABASE_URL from managed DB, API keys).
+- GitHub Actions:
+  - CI: `.github/workflows/ci.yml` builds API and Web.
+  - Docker images: `.github/workflows/docker-publish.yml` pushes to GHCR on tag.
+  - Migrations: `.github/workflows/migrate.yml` runs Prisma migrate with `DATABASE_URL` secret.
+
+### GH Secrets to add
+- DATABASE_URL
+- JWT_SECRET
+- OPENROUTER_API_KEY / OPENAI_API_KEY
+- OBP_CONSUMER_KEY / OBP_CONSUMER_SECRET / OBP_USERNAME / OBP_PASSWORD
+- STRIPE_API_KEY / STRIPE_WEBHOOK_SECRET
+- AAVE_RPC_URL / AAVE_POOL_ADDRESS_PROVIDER
