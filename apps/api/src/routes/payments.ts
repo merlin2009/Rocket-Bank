@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { requireAuth } from '../middleware/auth';
+import { requireAuth, requireKycApproved } from '../middleware/auth';
 import { prisma } from '../lib/prisma';
 
 const r = Router();
 
-r.post('/transfer', requireAuth, async (req, res) => {
+r.post('/transfer', requireAuth, requireKycApproved, async (req, res) => {
   const userId = (req as any).auth.userId as string;
   const { fromAccountId, toAccountId, amountMinor, currency } = req.body || {};
   if (!fromAccountId || !toAccountId || !amountMinor) return res.status(400).json({ error: 'Missing fields' });

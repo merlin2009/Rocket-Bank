@@ -23,7 +23,16 @@ model KycProfile {
   fullName  String?
   dob       DateTime?
   country   String?
+  provider  String?   // e.g., SUMSUB, ONFIDO (stub)
+  externalId String?
+  status    KycStatus @default(PENDING)
   createdAt DateTime @default(now())
+}
+
+enum KycStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model Account {

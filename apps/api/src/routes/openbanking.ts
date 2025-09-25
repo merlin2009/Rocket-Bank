@@ -8,6 +8,21 @@ const r = Router();
 // Simple in-memory token store per user (replace with DB when available)
 const obpTokenByUser = new Map<string, { token: string; obtainedAt: number }>();
 
+// OAuth 1.0a (request token -> authorize -> access token) — simplified stub flow
+// For real flow, redirect users to OBP authorize URL and handle callback.
+r.get('/oauth/request', requireAuth, async (_req, res) => {
+  // Return placeholder request token/secret
+  res.json({ oauth_token: 'req_token_stub', oauth_token_secret: 'req_secret_stub', authorize_url: `${env.obp.baseUrl}/oauth/authorize?oauth_token=req_token_stub` });
+});
+
+r.get('/oauth/callback', requireAuth, async (_req, res) => {
+  // Exchange request token for access token — here we just store a stub
+  const userId = (req as any).auth.userId as string;
+  const stubAccess = 'access_token_stub';
+  obpTokenByUser.set(userId, { token: stubAccess, obtainedAt: Date.now() });
+  res.json({ ok: true });
+});
+
 r.post('/directlogin', requireAuth, async (req, res) => {
   const userId = (req as any).auth.userId as string;
   try {
